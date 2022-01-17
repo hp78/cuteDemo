@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movement")]
     public float playerSpeed = 10f;
     public float playerFocusSpeed = 5f;
-
     Vector3 moveVector;
 
     // References to player sprite elements
@@ -16,19 +15,25 @@ public class PlayerController : MonoBehaviour
     public SpriteRenderer hitboxSpriteRend;
     public SpriteRenderer playerSpriteRend;
     public Transform spritePivotTf;
-
     float pivotRotationOffset = 0f;
 
     // Player shots
     public enum ShotType { BASIC, SPREAD, LASER };
     [Header("Player Shots")] 
     public ShotType currShotType = ShotType.BASIC;
-    [Space(3)]
-    public GameObject[] playerBits;
-
     public int shotPower = 0;
     float lastShot = 0.0f;
 
+    [Space(3)]
+    public GameObject[] playerBits;
+    [Space(3)]
+    public Transform[] playerBitPos1;
+    [Space(3)]
+    public Transform[] playerBitPos2;
+
+    // variables to transition bit positions from normal to focus positions
+    float bitTime = 0.0f;
+    float bitMultiplier = -5.0f;
 
 
     // Start is called before the first frame update
@@ -127,15 +132,26 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             hitboxSpriteRend.enabled = true;
+            bitMultiplier = 5.0f;
         }
 
         // Hides the hitbox leaving focus mode
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             hitboxSpriteRend.enabled = false;
+            bitMultiplier = -5.0f;
         }
 
+        // Update bit time
+        float currBitTime = bitTime + Time.deltaTime * bitMultiplier;
+        bitTime = Mathf.Clamp(currBitTime, 0, 1);
 
+        // Update bit position
+        for(int i = 0; i < playerBits.Length; ++i)
+        {
+            playerBits[i].transform.position = 
+                Vector3.Lerp(playerBitPos1[i].position, playerBitPos2[i].position, bitTime);
+        }
     }
 
     /// <summary>
@@ -168,7 +184,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //
+    /// <summary>
+    /// Shoots basic pattern projectile
+    /// </summary>
     void BasicShot()
     {
         // Shot cooldown
@@ -195,59 +213,140 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //
+    /// <summary>
+    /// Shoots spread pattern projectile
+    /// </summary>
     void SpreadShot()
     {
         // Shot cooldown
         if (lastShot < 0.15f) return;
         lastShot = 0;
 
-        // Basic shot at 0 power
+        // float for the x in projectile direction vector
+        float xVal = 1f;
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            xVal = 3f;
+        }
+
+        // Spread shot at 0 power
         PlayerShotPool.instance.SpawnBasicShot(transform.position + new Vector3(0, 0.3f));
         PlayerShotPool.instance.SpawnBasicShot(transform.position - new Vector3(0, 0.3f));
 
-        // Basic shot at 1 power
+        // Spread shot at 1 power
         if (shotPower > 0)
         {
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[0].transform.position, 
-                new Vector3(1,0.25f));
+                new Vector3(xVal,0.25f));
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[1].transform.position, 
-                new Vector3(1,-0.25f));
+                new Vector3(xVal, -0.25f));
         }
 
-        // Basic shot at 2 or more power
+        // Spread shot at 2 or more power
         if (shotPower > 1)
         {
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[2].transform.position,
-                new Vector3(1, 0.4f));
+                new Vector3(xVal, 0.4f));
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[3].transform.position,
-                new Vector3(1, -0.4f));
+                new Vector3(xVal, -0.4f));
         }
     }
 
-    //
+    /// <summary>
+    /// Shoots laser projectile
+    /// </summary>
     void LaserShot()
     {
         // Shot cooldown
         if (lastShot < 0.075f) return;
         lastShot = 0;
 
-        // Basic shot at 0 power
+        // Laser shot at 0 power
         PlayerShotPool.instance.SpawnLaserShot(transform.position + new Vector3(0, 0.2f));
         PlayerShotPool.instance.SpawnLaserShot(transform.position - new Vector3(0, 0.2f));
 
-        // Basic shot at 1 power
+        // Laser shot at 1 power
         if (shotPower > 0)
         {
             PlayerShotPool.instance.SpawnLaserShot(playerBits[0].transform.position);
             PlayerShotPool.instance.SpawnLaserShot(playerBits[1].transform.position);
         }
 
-        // Basic shot at 2 or more power
+        // Laser shot at 2 or more power
         if (shotPower > 1)
         {
             PlayerShotPool.instance.SpawnLaserShot(playerBits[2].transform.position);
             PlayerShotPool.instance.SpawnLaserShot(playerBits[3].transform.position);
+        }
+    }
+
+    /// <summary>
+    /// Increase the power of the player shot
+    /// </summary>
+    public void PowerUp()
+    {
+        ++shotPower;
+
+        if (shotPower > 0)
+        {
+            playerBits[0].SetActive(true);
+            playerBits[1].SetActive(true);
+        }
+
+        if (shotPower > 1)
+        {
+            playerBits[2].SetActive(true);
+            playerBits[3].SetActive(true);
+        }
+    }
+
+
+    /// <summary>
+    /// Change the current player shot type
+    /// </summary>
+    /// <param name="shotType"></param>
+    public void ChangeShotType(int shotType)
+    {
+        switch(shotType)
+        {
+            case 0:
+                currShotType = ShotType.BASIC;
+                break;
+
+            case 1:
+                currShotType = ShotType.SPREAD;
+                break;
+
+            case 2:
+                currShotType = ShotType.LASER;
+                break;
+
+            default:
+                currShotType = ShotType.BASIC;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Kills the player
+    /// </summary>
+    public void PlayerDeath()
+    {
+
+    }
+
+    // Collision
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            PlayerDeath();
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyShot"))
+        {
+            PlayerDeath();
+            collision.gameObject.SetActive(false);
         }
     }
 }

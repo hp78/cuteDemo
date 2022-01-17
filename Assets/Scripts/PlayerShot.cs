@@ -6,7 +6,7 @@ public class PlayerShot : MonoBehaviour
 {
     Vector3 directionVector = Vector3.right;
     public float bulletSpeed = 25;
-    public float bulletDamage = 1;
+    public int bulletDamage = 1;
     public SpriteRenderer bulletSpriteRend;
 
     // Sets the direction and rotation of the shot
@@ -19,6 +19,7 @@ public class PlayerShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Update bullet position
         transform.position += directionVector * bulletSpeed * Time.deltaTime;
 
         // disable when out of bounds
@@ -29,5 +30,14 @@ public class PlayerShot : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    // Collision
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // collision layers only with enemy units
+        gameObject.SetActive(false);
+        EnemyBehaviour enemy = collision.gameObject.GetComponent<EnemyBehaviour>();
+        enemy.ReceiveDamage(bulletDamage);
     }
 }

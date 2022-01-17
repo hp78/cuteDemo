@@ -6,14 +6,17 @@ public class PlayerShotPool : MonoBehaviour
 {
     public static PlayerShotPool instance;
 
+    [Header("Shot prefabs")]
     public GameObject basicShotPrefab;
     public GameObject spreadShotPrefab;
     public GameObject laserShotPrefab;
 
+    // Shots pool
     PlayerShot[] basicShotPool = new PlayerShot[30];
     PlayerShot[] spreadShotPool = new PlayerShot[20];
-    PlayerShot[] laserShotPool = new PlayerShot[50];
+    PlayerShot[] laserShotPool = new PlayerShot[20];
 
+    // Shot counters
     int basicShotCounter = 0;
     int spreadShotCounter = 0;
     int laserShotCounter = 0;
@@ -25,7 +28,7 @@ public class PlayerShotPool : MonoBehaviour
         InitializePools();
     }
 
-    //
+    // Instantiate enough shots for object pooling
     void InitializePools()
     {
         // Initialize pool for basic shots
@@ -50,30 +53,49 @@ public class PlayerShotPool : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn a basic shot at given position
+    /// </summary>
+    /// <param name="spawnPos">Vector3 Position the shot spawns at</param>
     public void SpawnBasicShot(Vector3 spawnPos)
     {
         basicShotPool[basicShotCounter].gameObject.SetActive(true);
         basicShotPool[basicShotCounter].transform.position = spawnPos;
         ++basicShotCounter;
+
+        // pool counter loops around
         if (basicShotCounter >= basicShotPool.Length)
             basicShotCounter = 0;
     }
 
+    /// <summary>
+    /// Spawns a spread shot at given position, direction vector also dictates rotation and direction
+    /// </summary>
+    /// <param name="spawnPos">Vector3 Position the shot spawns at</param>
+    /// <param name="direction">Vector3 Direction(and infered rotation) of projectile</param>
     public void SpawnSpreadShot(Vector3 spawnPos, Vector3 direction)
     {
         spreadShotPool[spreadShotCounter].gameObject.SetActive(true);
         spreadShotPool[spreadShotCounter].SetDirection(direction);
         spreadShotPool[spreadShotCounter].transform.position = spawnPos;
         ++spreadShotCounter;
+
+        // pool counter loops around
         if (spreadShotCounter >= spreadShotPool.Length)
             spreadShotCounter = 0;
     }
 
+    /// <summary>
+    /// Spawns a laser shot at given position
+    /// </summary>
+    /// <param name="spawnPos">Vector3 Position the shot spawns at</param>
     public void SpawnLaserShot(Vector3 spawnPos)
     {
         laserShotPool[laserShotCounter].gameObject.SetActive(true);
         laserShotPool[laserShotCounter].transform.position = spawnPos;
         ++laserShotCounter;
+
+        // pool counter loops around
         if (laserShotCounter >= laserShotPool.Length)
             laserShotCounter = 0;
     }
