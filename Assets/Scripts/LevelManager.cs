@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct SpawnTiming
-{
-    public float time;
-    public int enemyType;
-    public GameObject dropPrefab;
-}
+
 public class LevelManager : MonoBehaviour
 {
-    [Header("Enemy Prefabs")]
-    public List<GameObject> enemyPrefabs;
+    [System.Serializable]
+    public struct EnemyWaveTiming
+    {
+        public EnemyWaveSO enemyWaveData;
+        public float timing;
+    }
 
-    [Header("Enemy Spawn Timings")]
+    [Header("Enemy Waves")]
     [SerializeField]
-    public List<SpawnTiming> spawnTimings = new List<SpawnTiming>();
+    public List<EnemyWaveTiming> waveTimings = new List<EnemyWaveTiming>();
+    public GameObject enemyWavePrefab;
 
     float timeElapsed = 0f;
     int currIndex = 0;
@@ -24,22 +23,20 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Create a sub-manager for each wave
+        for(int i = 0; i < waveTimings.Count; ++i)
+        {
+            GameObject waveObject = Instantiate(enemyWavePrefab, transform);
+            waveObject.GetComponent<EnemyWaveBehaviour>().InitializeData(waveTimings[i].enemyWaveData, waveTimings[i].timing);
+        }
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
         // spawn an enemy if time passes time
         timeElapsed += Time.deltaTime;
-        if(currIndex < spawnTimings.Count)
-        {
-            if(spawnTimings[currIndex].time < timeElapsed)
-            {
-                GameObject go = Instantiate(enemyPrefabs[spawnTimings[currIndex].enemyType]);
-                go.GetComponent<EnemyBehaviour>().powerupPrefab = spawnTimings[currIndex].dropPrefab;
-                ++currIndex;
-            }
-        }
     }
 }

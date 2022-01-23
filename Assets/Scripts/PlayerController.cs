@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         moveVector = Vector3.zero;
+        RefreshBitState();
     }
 
     // Update is called once per frame
@@ -204,12 +205,26 @@ public class PlayerController : MonoBehaviour
             PlayerShotPool.instance.SpawnBasicShot(playerBits[1].transform.position);
         }
 
-        // Basic shot at 2 or more power
+        // Basic shot at 2
         if(shotPower > 1)
         {
             PlayerShotPool.instance.SpawnBasicShot(playerBits[2].transform.position);
             PlayerShotPool.instance.SpawnBasicShot(playerBits[3].transform.position);
 
+        }
+
+        // Spread shot at 3 or more power
+        if (shotPower > 2)
+        {
+            PlayerShotPool.instance.SpawnBasicShot(playerBits[4].transform.position);
+            PlayerShotPool.instance.SpawnBasicShot(playerBits[5].transform.position);
+        }
+
+        // Laser shot at 4 or more power
+        if (shotPower > 3)
+        {
+            PlayerShotPool.instance.SpawnBasicShot(playerBits[4].transform.position, Vector3.left);
+            PlayerShotPool.instance.SpawnBasicShot(playerBits[5].transform.position, Vector3.left);
         }
     }
 
@@ -224,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
         // float for the x in projectile direction vector
         float xVal = 1f;
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             xVal = 3f;
         }
@@ -236,19 +251,35 @@ public class PlayerController : MonoBehaviour
         // Spread shot at 1 power
         if (shotPower > 0)
         {
-            PlayerShotPool.instance.SpawnSpreadShot(playerBits[0].transform.position, 
-                new Vector3(xVal,0.25f));
-            PlayerShotPool.instance.SpawnSpreadShot(playerBits[1].transform.position, 
+            PlayerShotPool.instance.SpawnSpreadShot(playerBits[0].transform.position,
+                new Vector3(xVal, 0.25f));
+            PlayerShotPool.instance.SpawnSpreadShot(playerBits[1].transform.position,
                 new Vector3(xVal, -0.25f));
         }
 
-        // Spread shot at 2 or more power
+        // Spread shot at 2 power
         if (shotPower > 1)
         {
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[2].transform.position,
                 new Vector3(xVal, 0.4f));
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[3].transform.position,
                 new Vector3(xVal, -0.4f));
+        }
+
+        // Spread shot at 3 power
+        if (shotPower > 2)
+        {
+            PlayerShotPool.instance.SpawnSpreadShot(playerBits[4].transform.position,
+                new Vector3(xVal, 0.6f));
+            PlayerShotPool.instance.SpawnSpreadShot(playerBits[5].transform.position,
+                new Vector3(xVal, -0.6f));
+        }
+
+        // Spread shot at 4 power or more
+        if (shotPower > 3)
+        {
+            PlayerShotPool.instance.SpawnBasicShot(playerBits[4].transform.position);
+            PlayerShotPool.instance.SpawnBasicShot(playerBits[5].transform.position);
         }
     }
 
@@ -272,11 +303,25 @@ public class PlayerController : MonoBehaviour
             PlayerShotPool.instance.SpawnLaserShot(playerBits[1].transform.position);
         }
 
-        // Laser shot at 2 or more power
+        // Laser shot at 2 power
         if (shotPower > 1)
         {
             PlayerShotPool.instance.SpawnLaserShot(playerBits[2].transform.position);
             PlayerShotPool.instance.SpawnLaserShot(playerBits[3].transform.position);
+        }
+
+        // Laser shot at 3 power
+        if (shotPower > 2)
+        {
+            PlayerShotPool.instance.SpawnLaserShot(playerBits[4].transform.position);
+            PlayerShotPool.instance.SpawnLaserShot(playerBits[5].transform.position);
+        }
+
+        // Laser shot at 4 or more power
+        if (shotPower > 3)
+        {
+            PlayerShotPool.instance.SpawnLaserShot(playerBits[4].transform.position, Vector3.up);
+            PlayerShotPool.instance.SpawnLaserShot(playerBits[5].transform.position, -Vector3.up);
         }
     }
 
@@ -287,17 +332,20 @@ public class PlayerController : MonoBehaviour
     {
         ++shotPower;
 
-        if (shotPower > 0)
-        {
-            playerBits[0].SetActive(true);
-            playerBits[1].SetActive(true);
-        }
+        RefreshBitState();
+    }
 
-        if (shotPower > 1)
-        {
-            playerBits[2].SetActive(true);
-            playerBits[3].SetActive(true);
-        }
+    /// <summary>
+    /// Shows/Hides the correct amount of bits floating in respect to player power level
+    /// </summary>
+    public void RefreshBitState()
+    {
+        playerBits[0].SetActive(shotPower > 0);
+        playerBits[1].SetActive(shotPower > 0);
+        playerBits[2].SetActive(shotPower > 1);
+        playerBits[3].SetActive(shotPower > 1);
+        playerBits[4].SetActive(shotPower > 2);
+        playerBits[5].SetActive(shotPower > 2);
     }
 
 
@@ -325,6 +373,8 @@ public class PlayerController : MonoBehaviour
                 currShotType = ShotType.BASIC;
                 break;
         }
+        if (shotPower == 0)
+            PowerUp();
     }
 
     /// <summary>

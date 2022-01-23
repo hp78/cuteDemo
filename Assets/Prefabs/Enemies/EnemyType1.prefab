@@ -114,7 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca2543c9663df642ab0dba56572e274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 10
+  enemyHealth: 72
+  powerupPrefab: {fileID: 0}
 --- !u!50 &5187579579210725680
 Rigidbody2D:
   serializedVersion: 4

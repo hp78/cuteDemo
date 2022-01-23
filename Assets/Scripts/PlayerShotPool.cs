@@ -12,9 +12,9 @@ public class PlayerShotPool : MonoBehaviour
     public GameObject laserShotPrefab;
 
     // Shots pool
-    PlayerShot[] basicShotPool = new PlayerShot[30];
-    PlayerShot[] spreadShotPool = new PlayerShot[20];
-    PlayerShot[] laserShotPool = new PlayerShot[20];
+    PlayerShot[] basicShotPool = new PlayerShot[40];
+    PlayerShot[] spreadShotPool = new PlayerShot[40];
+    PlayerShot[] laserShotPool = new PlayerShot[40];
 
     // Shot counters
     int basicShotCounter = 0;
@@ -59,7 +59,18 @@ public class PlayerShotPool : MonoBehaviour
     /// <param name="spawnPos">Vector3 Position the shot spawns at</param>
     public void SpawnBasicShot(Vector3 spawnPos)
     {
+        SpawnBasicShot(spawnPos, Vector3.right);
+    }
+
+    /// <summary>
+    /// Spawn a basic shot at given position, direction vector also dictates rotation and direction
+    /// </summary>
+    /// <param name="spawnPos">Vector3 Position the shot spawns at</param>
+    /// <param name="direction">Vector3 Direction(and infered rotation) of projectile</param>
+    public void SpawnBasicShot(Vector3 spawnPos, Vector3 direction)
+    {
         basicShotPool[basicShotCounter].gameObject.SetActive(true);
+        basicShotPool[basicShotCounter].SetDirection(direction);
         basicShotPool[basicShotCounter].transform.position = spawnPos;
         ++basicShotCounter;
 
@@ -91,7 +102,18 @@ public class PlayerShotPool : MonoBehaviour
     /// <param name="spawnPos">Vector3 Position the shot spawns at</param>
     public void SpawnLaserShot(Vector3 spawnPos)
     {
+        SpawnLaserShot(spawnPos, Vector3.right);
+    }
+
+    /// <summary>
+    /// Spawns a laser shot at given position, direction vector also dictates rotation and direction
+    /// </summary>
+    /// <param name="spawnPos">Vector3 Position the shot spawns at</param>
+    /// <param name="direction">Vector3 Direction(and infered rotation) of projectile</param>
+    public void SpawnLaserShot(Vector3 spawnPos, Vector3 direction)
+    {
         laserShotPool[laserShotCounter].gameObject.SetActive(true);
+        laserShotPool[laserShotCounter].SetDirection(direction);
         laserShotPool[laserShotCounter].transform.position = spawnPos;
         ++laserShotCounter;
 
