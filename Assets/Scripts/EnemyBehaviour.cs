@@ -11,6 +11,9 @@ public class EnemyBehaviour : MonoBehaviour
     // enemy powerup drop
     public GameObject powerupPrefab;
 
+    // enemy bullet prefab
+    public GameObject enemyShotPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,5 +64,10 @@ public class EnemyBehaviour : MonoBehaviour
     public void DisableEnemy()
     {
         gameObject.SetActive(false);
+    }
+
+    public void StraightShot()
+    {
+        Instantiate(enemyShotPrefab, transform.position, Quaternion.identity);
     }
 }

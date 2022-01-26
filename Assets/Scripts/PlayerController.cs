@@ -333,6 +333,7 @@ public class PlayerController : MonoBehaviour
         ++shotPower;
 
         RefreshBitState();
+        GameManager.instance.UpdateStatText(3, shotPower, currShotType);
     }
 
     /// <summary>
@@ -375,6 +376,8 @@ public class PlayerController : MonoBehaviour
         }
         if (shotPower == 0)
             PowerUp();
+
+        GameManager.instance.UpdateStatText(3, shotPower, currShotType);
     }
 
     /// <summary>

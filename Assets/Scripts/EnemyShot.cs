@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class EnemyShot : MonoBehaviour
 {
-    Vector3 directionVector = Vector3.right;
-    public float bulletSpeed = 25;
+    Vector3 directionVector = Vector3.left;
+    public float bulletSpeed = 5;
     public int bulletDamage = 1;
-    public SpriteRenderer bulletSpriteRend;
 
     // Sets the direction and rotation of the shot
     public void SetDirection(Vector3 newDirection)

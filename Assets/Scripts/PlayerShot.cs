@@ -7,7 +7,6 @@ public class PlayerShot : MonoBehaviour
     Vector3 directionVector = Vector3.right;
     public float bulletSpeed = 25;
     public int bulletDamage = 1;
-    public SpriteRenderer bulletSpriteRend;
 
     // Sets the direction and rotation of the shot
     public void SetDirection(Vector3 newDirection)

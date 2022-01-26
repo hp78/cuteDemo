@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5187579579210725682
+--- !u!1 &5245889409552047056
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5187579579210725684}
-  - component: {fileID: 5187579579210725687}
-  - component: {fileID: 5187579579210725686}
-  - component: {fileID: 5187579579210725681}
-  - component: {fileID: 5187579579210725680}
-  - component: {fileID: 5187579579210725683}
+  - component: {fileID: 5245889409552047060}
+  - component: {fileID: 5245889409552047061}
+  - component: {fileID: 5245889409552047062}
+  - component: {fileID: 5245889409552047063}
+  - component: {fileID: 5245889409552047051}
+  - component: {fileID: 5245889409552047050}
   m_Layer: 8
-  m_Name: EnemyType1
+  m_Name: EnemyType2_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5187579579210725684
+--- !u!4 &5245889409552047060
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187579579210725682}
+  m_GameObject: {fileID: 5245889409552047056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.11, y: -3.33, z: 0}
+  m_LocalPosition: {x: 12, y: 2.5, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5187579579210725687
+--- !u!212 &5245889409552047061
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187579579210725682}
+  m_GameObject: {fileID: 5245889409552047056}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -86,13 +86,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &5187579579210725686
+--- !u!58 &5245889409552047062
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187579579210725682}
+  m_GameObject: {fileID: 5245889409552047056}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -102,13 +102,13 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &5187579579210725681
+--- !u!114 &5245889409552047063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187579579210725682}
+  m_GameObject: {fileID: 5245889409552047056}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ca2543c9663df642ab0dba56572e274, type: 3}
@@ -116,14 +116,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 72
   powerupPrefab: {fileID: 0}
---- !u!50 &5187579579210725680
+  enemyShotPrefab: {fileID: 7141221308936701929, guid: 085fbb3972bba8742811139773fe45b6, type: 3}
+--- !u!50 &5245889409552047051
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187579579210725682}
+  m_GameObject: {fileID: 5245889409552047056}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -137,17 +138,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &5187579579210725683
+--- !u!95 &5245889409552047050
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5187579579210725682}
+  m_GameObject: {fileID: 5245889409552047056}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 81c20fa1e4ed5ce4facd86fa337b5a35, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2adc2107711c3d446bc4ee4943e03eb5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
