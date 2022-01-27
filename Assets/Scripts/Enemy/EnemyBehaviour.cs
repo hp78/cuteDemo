@@ -14,6 +14,15 @@ public class EnemyBehaviour : MonoBehaviour
     // enemy bullet prefab
     public GameObject enemyShotPrefab;
 
+    // death explosion prefab
+    public GameObject deathExplosionPrefab;
+
+    // how many points this enemy is worth
+    public int score = 100; // 100 default
+
+    // alive bool check
+    bool isAlive = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,15 +37,25 @@ public class EnemyBehaviour : MonoBehaviour
     {
         enemyHealth -= damage;
 
-        if (enemyHealth < 1)
+        if (enemyHealth < 1 && isAlive)
         {
+            // set enemy as dead to prevent segment running mulitple times
+            isAlive = false;
+
             // if enemy has powerup assigned, spawn one at death position
             if(powerupPrefab != null && gameObject.activeInHierarchy)
             {
                 Instantiate(powerupPrefab, transform.position, Quaternion.identity);
             }
             StopAllCoroutines();
-            gameObject.SetActive(false);
+
+            GameManager.instance.AddScore(score);
+            
+            // create fx for death explosion
+            GameObject explosionObject = Instantiate(deathExplosionPrefab, transform.position, Quaternion.identity);
+            // destroy explosion after 1sec and destroy self
+            Destroy(explosionObject, 1f);
+            Destroy(gameObject);
 
             return;
         }

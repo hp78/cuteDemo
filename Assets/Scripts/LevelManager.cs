@@ -17,9 +17,6 @@ public class LevelManager : MonoBehaviour
     public List<EnemyWaveTiming> waveTimings = new List<EnemyWaveTiming>();
     public GameObject enemyWavePrefab;
 
-    float timeElapsed = 0f;
-    int currIndex = 0;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +33,6 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // spawn an enemy if time passes time
-        timeElapsed += Time.deltaTime;
+        
     }
 }

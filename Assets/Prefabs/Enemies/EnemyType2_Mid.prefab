@@ -117,6 +117,7 @@ MonoBehaviour:
   enemyHealth: 72
   powerupPrefab: {fileID: 0}
   enemyShotPrefab: {fileID: 7141221308936701929, guid: 085fbb3972bba8742811139773fe45b6, type: 3}
+  deathExplosionPrefab: {fileID: 7374464770772140130, guid: a1a7bb724f8cf8949a6b9ceabed86020, type: 3}
 --- !u!50 &9023396522689999582
 Rigidbody2D:
   serializedVersion: 4

@@ -17,13 +17,25 @@ public class PlayerController : MonoBehaviour
     public Transform spritePivotTf;
     float pivotRotationOffset = 0f;
 
-    // Player shots
+    // Player shot types
     public enum ShotType { BASIC, SPREAD, LASER };
-    [Header("Player Shots")] 
-    public ShotType currShotType = ShotType.BASIC;
-    public int shotPower = 0;
+
+    // Player state and elapsed state time
+    public enum PlayerState { NORMAL, INVUL, DEATH, GAMEOVER };
+    PlayerState currPlayerState = PlayerState.INVUL;
+    float elapsedStateTime = 0f;
+
+    // PlayerStat
+    public PlayerStatSO playerStat;
+
+    //[Header("Player Shots")] 
+    //public ShotType currShotType = ShotType.BASIC;
+    //public int shotPower = 0;
+
+    // time from last shot
     float lastShot = 0.0f;
 
+    // Reference to all the player shooting bits and their 2 sets of positions
     [Space(3)]
     public GameObject[] playerBits;
     [Space(3)]
@@ -35,10 +47,16 @@ public class PlayerController : MonoBehaviour
     float bitTime = 0.0f;
     float bitMultiplier = -5.0f;
 
+    // Audio source
+    AudioSource audioSource;
+
+    // Explosion reference
+    public GameObject explosionFXPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         moveVector = Vector3.zero;
         RefreshBitState();
     }
@@ -46,9 +64,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateMovement();
-        UpdateSprite();
-        UpdateShooting();
+        // updates the state of player
+        UpdatePlayerState();
+
+        // only respond when player is alive or invul
+        if (currPlayerState == PlayerState.NORMAL || currPlayerState == PlayerState.INVUL)
+        {
+            UpdateMovement();
+            UpdateSprite();
+            UpdateShooting();
+        }
+        
     }
 
     /// <summary>
@@ -164,7 +190,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Z))
         {
-            switch(currShotType)
+            switch(playerStat.currShotType)
             {
                 case ShotType.BASIC:
                     BasicShot();
@@ -186,6 +212,81 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// Updates logic corresponding to current state of the player
+    /// </summary>
+    void UpdatePlayerState()
+    {
+        elapsedStateTime += Time.deltaTime;
+
+        if (currPlayerState == PlayerState.NORMAL)
+        {
+
+        }
+        else if (currPlayerState == PlayerState.INVUL)
+        {
+            if(elapsedStateTime > 2.0f)
+                ChangePlayerState(PlayerState.NORMAL);
+        }
+        else if (currPlayerState == PlayerState.DEATH)
+        {
+            if (elapsedStateTime > 0.5f)
+                ChangePlayerState(PlayerState.INVUL);
+        }
+    }
+
+    /// <summary>
+    /// Changes current player state to the given next state
+    /// </summary>
+    /// <param name="nextState"></param>
+    void ChangePlayerState(PlayerState nextState)
+    {
+        if (nextState == currPlayerState)
+        {
+            return;
+        }
+        else if(nextState == PlayerState.NORMAL)
+        {
+            // reset timer and restore player to normal state and color
+            elapsedStateTime = 0.0f;
+            currPlayerState = PlayerState.NORMAL;
+            playerSpriteRend.color = new Color(1, 1, 1, 1);
+        }
+        else if(nextState == PlayerState.INVUL)
+        {
+            // reset timer and set player invul and flicker
+            elapsedStateTime = 0.0f;
+            currPlayerState = PlayerState.INVUL;
+            StartCoroutine(PlayerFlicker(2.0f));
+        }
+        else if(nextState == PlayerState.DEATH)
+        {
+            // reset timer and set player dead and not visible
+            elapsedStateTime = 0.0f;
+            currPlayerState = PlayerState.DEATH;
+            playerSpriteRend.color = new Color(0, 0, 0, 0);
+        }
+    }
+
+    /// <summary>
+    /// Coroutine to make player flicker
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator PlayerFlicker(float flickerDuration)
+    {
+        float currRunningTime = 0.0f;
+        while(currRunningTime < flickerDuration)
+        {
+            playerSpriteRend.color = Color.yellow;
+            yield return new WaitForSeconds(0.1f);
+            playerSpriteRend.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+            currRunningTime += 0.2f;
+        }
+        playerSpriteRend.color = Color.white;
+        yield return null;
+    }
+
+    /// <summary>
     /// Shoots basic pattern projectile
     /// </summary>
     void BasicShot()
@@ -193,20 +294,21 @@ public class PlayerController : MonoBehaviour
         // Shot cooldown
         if (lastShot < 0.15f) return;
         lastShot = 0;
+        audioSource.Play();
 
         // Basic shot at 0 power
         PlayerShotPool.instance.SpawnBasicShot(transform.position + new Vector3(0, 0.1f));
         PlayerShotPool.instance.SpawnBasicShot(transform.position - new Vector3(0, 0.1f));
 
         // Basic shot at 1 power
-        if (shotPower > 0)
+        if (playerStat.currPower > 0)
         {
             PlayerShotPool.instance.SpawnBasicShot(playerBits[0].transform.position);
             PlayerShotPool.instance.SpawnBasicShot(playerBits[1].transform.position);
         }
 
         // Basic shot at 2
-        if(shotPower > 1)
+        if(playerStat.currPower > 1)
         {
             PlayerShotPool.instance.SpawnBasicShot(playerBits[2].transform.position);
             PlayerShotPool.instance.SpawnBasicShot(playerBits[3].transform.position);
@@ -214,14 +316,14 @@ public class PlayerController : MonoBehaviour
         }
 
         // Spread shot at 3 or more power
-        if (shotPower > 2)
+        if (playerStat.currPower > 2)
         {
             PlayerShotPool.instance.SpawnBasicShot(playerBits[4].transform.position);
             PlayerShotPool.instance.SpawnBasicShot(playerBits[5].transform.position);
         }
 
         // Laser shot at 4 or more power
-        if (shotPower > 3)
+        if (playerStat.currPower > 3)
         {
             PlayerShotPool.instance.SpawnBasicShot(playerBits[4].transform.position, Vector3.left);
             PlayerShotPool.instance.SpawnBasicShot(playerBits[5].transform.position, Vector3.left);
@@ -236,6 +338,7 @@ public class PlayerController : MonoBehaviour
         // Shot cooldown
         if (lastShot < 0.15f) return;
         lastShot = 0;
+        audioSource.Play();
 
         // float for the x in projectile direction vector
         float xVal = 1f;
@@ -249,7 +352,7 @@ public class PlayerController : MonoBehaviour
         PlayerShotPool.instance.SpawnBasicShot(transform.position - new Vector3(0, 0.3f));
 
         // Spread shot at 1 power
-        if (shotPower > 0)
+        if (playerStat.currPower > 0)
         {
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[0].transform.position,
                 new Vector3(xVal, 0.25f));
@@ -258,7 +361,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Spread shot at 2 power
-        if (shotPower > 1)
+        if (playerStat.currPower > 1)
         {
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[2].transform.position,
                 new Vector3(xVal, 0.4f));
@@ -267,7 +370,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Spread shot at 3 power
-        if (shotPower > 2)
+        if (playerStat.currPower > 2)
         {
             PlayerShotPool.instance.SpawnSpreadShot(playerBits[4].transform.position,
                 new Vector3(xVal, 0.6f));
@@ -276,7 +379,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Spread shot at 4 power or more
-        if (shotPower > 3)
+        if (playerStat.currPower > 3)
         {
             PlayerShotPool.instance.SpawnBasicShot(playerBits[4].transform.position);
             PlayerShotPool.instance.SpawnBasicShot(playerBits[5].transform.position);
@@ -291,34 +394,35 @@ public class PlayerController : MonoBehaviour
         // Shot cooldown
         if (lastShot < 0.075f) return;
         lastShot = 0;
+        audioSource.Play();
 
         // Laser shot at 0 power
         PlayerShotPool.instance.SpawnLaserShot(transform.position + new Vector3(0, 0.2f));
         PlayerShotPool.instance.SpawnLaserShot(transform.position - new Vector3(0, 0.2f));
 
         // Laser shot at 1 power
-        if (shotPower > 0)
+        if (playerStat.currPower > 0)
         {
             PlayerShotPool.instance.SpawnLaserShot(playerBits[0].transform.position);
             PlayerShotPool.instance.SpawnLaserShot(playerBits[1].transform.position);
         }
 
         // Laser shot at 2 power
-        if (shotPower > 1)
+        if (playerStat.currPower > 1)
         {
             PlayerShotPool.instance.SpawnLaserShot(playerBits[2].transform.position);
             PlayerShotPool.instance.SpawnLaserShot(playerBits[3].transform.position);
         }
 
         // Laser shot at 3 power
-        if (shotPower > 2)
+        if (playerStat.currPower > 2)
         {
             PlayerShotPool.instance.SpawnLaserShot(playerBits[4].transform.position);
             PlayerShotPool.instance.SpawnLaserShot(playerBits[5].transform.position);
         }
 
         // Laser shot at 4 or more power
-        if (shotPower > 3)
+        if (playerStat.currPower > 3)
         {
             PlayerShotPool.instance.SpawnLaserShot(playerBits[4].transform.position, Vector3.up);
             PlayerShotPool.instance.SpawnLaserShot(playerBits[5].transform.position, -Vector3.up);
@@ -330,10 +434,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PowerUp()
     {
-        ++shotPower;
+        // increment shot power
+        ++playerStat.currPower;
 
+        // updates how many bits are active
         RefreshBitState();
-        GameManager.instance.UpdateStatText(3, shotPower, currShotType);
+
+        // update ui
+        GameManager.instance.UpdateStatText();
     }
 
     /// <summary>
@@ -341,12 +449,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void RefreshBitState()
     {
-        playerBits[0].SetActive(shotPower > 0);
-        playerBits[1].SetActive(shotPower > 0);
-        playerBits[2].SetActive(shotPower > 1);
-        playerBits[3].SetActive(shotPower > 1);
-        playerBits[4].SetActive(shotPower > 2);
-        playerBits[5].SetActive(shotPower > 2);
+        playerBits[0].SetActive(playerStat.currPower > 0);
+        playerBits[1].SetActive(playerStat.currPower > 0);
+        playerBits[2].SetActive(playerStat.currPower > 1);
+        playerBits[3].SetActive(playerStat.currPower > 1);
+        playerBits[4].SetActive(playerStat.currPower > 2);
+        playerBits[5].SetActive(playerStat.currPower > 2);
     }
 
 
@@ -356,28 +464,31 @@ public class PlayerController : MonoBehaviour
     /// <param name="shotType"></param>
     public void ChangeShotType(int shotType)
     {
+        // set according to new shot type pickup
         switch(shotType)
         {
             case 0:
-                currShotType = ShotType.BASIC;
+                playerStat.currShotType = ShotType.BASIC;
                 break;
 
             case 1:
-                currShotType = ShotType.SPREAD;
+                playerStat.currShotType = ShotType.SPREAD;
                 break;
 
             case 2:
-                currShotType = ShotType.LASER;
+                playerStat.currShotType = ShotType.LASER;
                 break;
 
             default:
-                currShotType = ShotType.BASIC;
+                playerStat.currShotType = ShotType.BASIC;
                 break;
         }
-        if (shotPower == 0)
+        // free powerup if player is at 0 shot power
+        if (playerStat.currPower == 0)
             PowerUp();
 
-        GameManager.instance.UpdateStatText(3, shotPower, currShotType);
+        // update ui
+        GameManager.instance.UpdateStatText();
     }
 
     /// <summary>
@@ -385,19 +496,42 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerDeath()
     {
+        // reduce player lives
+        --playerStat.currLives;
 
+        // update ui
+        GameManager.instance.UpdateStatText();
+        
+        // set the player dead
+        ChangePlayerState(PlayerState.DEATH);
+        
+        // spawn explosion fx and destroy it afterwards
+        GameObject explosionObject = Instantiate(explosionFXPrefab, transform.position, Quaternion.identity);
+        Destroy(explosionObject, 1f);
+
+        // reduce player shot power to 1 if at higher power level
+        if(playerStat.currPower > 1)
+        {
+            playerStat.currPower = 1;
+            RefreshBitState();
+        }
     }
 
     // Collision
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        // if alive and hit enemy
+        if(currPlayerState == PlayerState.NORMAL && 
+            collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
+            // kill player
             PlayerDeath();
         }
 
+        // if alive and hit enemy bullet
         if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyShot"))
         {
+            // kill player and disable enemy bullet
             PlayerDeath();
             collision.gameObject.SetActive(false);
         }

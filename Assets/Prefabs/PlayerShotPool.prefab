@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &169841768949403771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169841768949403769}
+  - component: {fileID: 169841768949403770}
+  m_Layer: 0
+  m_Name: PlayerShotPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &169841768949403769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169841768949403771}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.35455754, y: 0.23213202, z: -12.100704}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &169841768949403770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169841768949403771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e50c796a96b6cc545ae5d9d17769a7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicShotPrefab: {fileID: 8059511223962161373, guid: 1ff056f763d385d4fb3070576202e17a, type: 3}
+  spreadShotPrefab: {fileID: 2070867220839564246, guid: 357e2d7b222ce714a81c4ea096dec5bc, type: 3}
+  laserShotPrefab: {fileID: 3502012651843167080, guid: 9167034c37f043b4cabb1c280292d638, type: 3}

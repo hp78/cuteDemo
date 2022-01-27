@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &652658184011096619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 652658184011096617}
+  - component: {fileID: 652658184011096618}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &652658184011096617
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652658184011096619}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6385544, y: 0.5310008, z: -0.7230073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &652658184011096618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652658184011096619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac90f4dc49b4cc649a2aa34051116bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveTimings:
+  - enemyWaveData: {fileID: 11400000, guid: a05e41f34d3eed7458d7b000170e9dc8, type: 2}
+    timing: 5
+  - enemyWaveData: {fileID: 11400000, guid: 683abc02f64517a4a83de12193ff1709, type: 2}
+    timing: 10
+  - enemyWaveData: {fileID: 11400000, guid: 7af11fdc0e510154faf0d2e58abdbe38, type: 2}
+    timing: 17
+  - enemyWaveData: {fileID: 11400000, guid: c6f3433b20a5d6e4a92356b84f5a9c35, type: 2}
+    timing: 17.2
+  - enemyWaveData: {fileID: 11400000, guid: 08ff967b94096734c81f07dcb4446814, type: 2}
+    timing: 20
+  - enemyWaveData: {fileID: 11400000, guid: 79f2d8db82af85f4ab05490a778362b0, type: 2}
+    timing: 21
+  - enemyWaveData: {fileID: 11400000, guid: 6334cab4a7d153448b565341e82b084e, type: 2}
+    timing: 21
+  enemyWavePrefab: {fileID: 1756478721916313046, guid: 16c1619c7a3d5e44a84b2cffbbc69750, type: 3}
