@@ -27,6 +27,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         spriteRend = GetComponent<SpriteRenderer>();
+        enemyHealth = (int)(enemyHealth * GameManager.instance.currPlayerStat.difficultyModifier);
     }
 
     /// <summary>

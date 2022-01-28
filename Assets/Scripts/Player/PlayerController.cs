@@ -529,7 +529,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // if alive and hit enemy bullet
-        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyShot"))
+        if (currPlayerState == PlayerState.NORMAL && 
+            collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
             // kill player and disable enemy bullet
             PlayerDeath();

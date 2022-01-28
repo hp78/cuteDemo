@@ -16,4 +16,5 @@ MonoBehaviour:
   currPower: 0
   currLives: 0
   currScore: 0
-  currLevel: 0
+  currLevel: 5
+  difficultyModifier: 0

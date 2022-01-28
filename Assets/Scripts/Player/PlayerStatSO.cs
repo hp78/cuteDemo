@@ -9,6 +9,7 @@ public class PlayerStatSO : ScriptableObject
     public int currLives;
     public int currScore;
     public int currLevel;
+    public float difficultyModifier;
 
     /// <summary>
     /// Resets the player stats

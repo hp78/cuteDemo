@@ -848,6 +848,78 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[0].timing
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[1].timing
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[2].timing
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[3].timing
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[4].timing
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[5].timing
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[6].timing
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[7].timing
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[8].timing
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[9].timing
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[10].timing
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[11].timing
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[7].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6334cab4a7d153448b565341e82b084e, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[8].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 08ff967b94096734c81f07dcb4446814, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[9].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 79f2d8db82af85f4ab05490a778362b0, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[10].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 08ff967b94096734c81f07dcb4446814, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[11].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6334cab4a7d153448b565341e82b084e, type: 2}
     - target: {fileID: 652658184011096619, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
       propertyPath: m_Name
       value: LevelManager
