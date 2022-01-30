@@ -16,5 +16,5 @@ MonoBehaviour:
   currPower: 3
   currLives: 3
   currScore: 4700
-  currLevel: 1
-  difficultyModifier: -1
+  currLevel: -1
+  difficultyModifier: 1
