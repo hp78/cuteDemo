@@ -936,7 +936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
       propertyPath: endTiming
-      value: 52
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
       propertyPath: waveTimings.Array.size
@@ -991,9 +991,25 @@ PrefabInstance:
       value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[0].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 95888427e4b2e324cb0af95e7865014b, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[1].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 3efae97a71c40334980d48a8f9d11b68, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[5].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 86db30a029f017942bed8481ed0e5704, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
+      propertyPath: waveTimings.Array.data[6].enemyWaveData
+      value: 
+      objectReference: {fileID: 11400000, guid: ff4cd5d9eddea5f45ac8decbce2672ae, type: 2}
+    - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
       propertyPath: waveTimings.Array.data[7].enemyWaveData
       value: 
-      objectReference: {fileID: 11400000, guid: 6334cab4a7d153448b565341e82b084e, type: 2}
+      objectReference: {fileID: 11400000, guid: 95888427e4b2e324cb0af95e7865014b, type: 2}
     - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
       propertyPath: waveTimings.Array.data[8].enemyWaveData
       value: 
@@ -1001,7 +1017,7 @@ PrefabInstance:
     - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
       propertyPath: waveTimings.Array.data[9].enemyWaveData
       value: 
-      objectReference: {fileID: 11400000, guid: 79f2d8db82af85f4ab05490a778362b0, type: 2}
+      objectReference: {fileID: 11400000, guid: 3efae97a71c40334980d48a8f9d11b68, type: 2}
     - target: {fileID: 652658184011096618, guid: e80ae226b03af65498cb9e8a7f163544, type: 3}
       propertyPath: waveTimings.Array.data[10].enemyWaveData
       value: 
@@ -1080,10 +1096,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 509876675770735994, guid: 925cca6f3baf10c47b30eb1d5eab45ef, type: 3}
+      propertyPath: m_text
+      value: LEVEL 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1464983550926123567, guid: 925cca6f3baf10c47b30eb1d5eab45ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 248088532}
+    - target: {fileID: 1464983550926123567, guid: 925cca6f3baf10c47b30eb1d5eab45ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LevelRestart
+      objectReference: {fileID: 0}
     - target: {fileID: 3080959163111150726, guid: 925cca6f3baf10c47b30eb1d5eab45ef, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1188,6 +1212,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 248088532}
+    - target: {fileID: 3089042904635913266, guid: 925cca6f3baf10c47b30eb1d5eab45ef, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToMainMenu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 925cca6f3baf10c47b30eb1d5eab45ef, type: 3}
 --- !u!114 &3080959163050270430 stripped
@@ -1275,7 +1303,7 @@ PrefabInstance:
       objectReference: {fileID: 3080959163050270431}
     - target: {fileID: 4065755850101740306, guid: 1eb0dd8539e897c4cb92f44d964b1fb7, type: 3}
       propertyPath: nextLevelName
-      value: Level2
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 4065755850101740306, guid: 1eb0dd8539e897c4cb92f44d964b1fb7, type: 3}
       propertyPath: playerController

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f14e985552ab443bc12ee598121b74, type: 3}
   m_Name: PlayerStatCurr
   m_EditorClassIdentifier: 
-  currShotType: 1
-  currPower: 1
-  currLives: -54
-  currScore: 200
-  currLevel: 0
+  currShotType: 2
+  currPower: 3
+  currLives: 0
+  currScore: 4800
+  currLevel: 1
+  difficultyModifier: 1

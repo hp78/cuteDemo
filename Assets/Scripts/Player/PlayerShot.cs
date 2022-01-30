@@ -1,5 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+////
+// Description : Behaviour for the player bullet
+////
+
 using UnityEngine;
 
 public class PlayerShot : MonoBehaviour

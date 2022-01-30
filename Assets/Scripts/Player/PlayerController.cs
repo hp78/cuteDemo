@@ -1,5 +1,9 @@
+////
+// Description : Handles the player character. 
+//                  Handles input from player and visual updates to the player object.
+////
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -28,11 +32,7 @@ public class PlayerController : MonoBehaviour
     // PlayerStat
     public PlayerStatSO playerStat;
 
-    //[Header("Player Shots")] 
-    //public ShotType currShotType = ShotType.BASIC;
-    //public int shotPower = 0;
-
-    // time from last shot
+    // Time from last shot
     float lastShot = 0.0f;
 
     // Reference to all the player shooting bits and their 2 sets of positions
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     [Space(3)]
     public Transform[] playerBitPos2;
 
-    // variables to transition bit positions from normal to focus positions
+    // Variables to transition bit positions from normal to focus positions
     float bitTime = 0.0f;
     float bitMultiplier = -5.0f;
 
@@ -56,25 +56,28 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Initialize reference and variables
         audioSource = GetComponent<AudioSource>();
         moveVector = Vector3.zero;
+
+        // Initialize visual elements
         RefreshBitState();
+        GameManager.instance.UpdateStatText();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // updates the state of player
+        // Updates the state of player
         UpdatePlayerState();
 
-        // only respond when player is alive or invul
+        // Only respond when player is alive or invul
         if (currPlayerState == PlayerState.NORMAL || currPlayerState == PlayerState.INVUL)
         {
             UpdateMovement();
             UpdateSprite();
             UpdateShooting();
-        }
-        
+        }        
     }
 
     /// <summary>
@@ -218,11 +221,7 @@ public class PlayerController : MonoBehaviour
     {
         elapsedStateTime += Time.deltaTime;
 
-        if (currPlayerState == PlayerState.NORMAL)
-        {
-
-        }
-        else if (currPlayerState == PlayerState.INVUL)
+        if (currPlayerState == PlayerState.INVUL)
         {
             if(elapsedStateTime > 2.0f)
                 ChangePlayerState(PlayerState.NORMAL);
@@ -434,13 +433,15 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PowerUp()
     {
-        // increment shot power
+        // Increment shot power
         ++playerStat.currPower;
+        if (playerStat.currPower > 4)
+            playerStat.currPower = 4;
 
-        // updates how many bits are active
+        // Updates how many bits are active
         RefreshBitState();
 
-        // update ui
+        // Update UI
         GameManager.instance.UpdateStatText();
     }
 
@@ -462,27 +463,11 @@ public class PlayerController : MonoBehaviour
     /// Change the current player shot type
     /// </summary>
     /// <param name="shotType"></param>
-    public void ChangeShotType(int shotType)
+    public void ChangeShotType(ShotType shotType)
     {
-        // set according to new shot type pickup
-        switch(shotType)
-        {
-            case 0:
-                playerStat.currShotType = ShotType.BASIC;
-                break;
+        // Set according to new shot type pickup
+        playerStat.currShotType = shotType;
 
-            case 1:
-                playerStat.currShotType = ShotType.SPREAD;
-                break;
-
-            case 2:
-                playerStat.currShotType = ShotType.LASER;
-                break;
-
-            default:
-                playerStat.currShotType = ShotType.BASIC;
-                break;
-        }
         // free powerup if player is at 0 shot power
         if (playerStat.currPower == 0)
             PowerUp();
@@ -496,20 +481,27 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerDeath()
     {
-        // reduce player lives
+        // Reduce player lives
         --playerStat.currLives;
 
-        // update ui
+        // if no more lives, game over
+        if (playerStat.currLives < 0)
+        {
+            GameManager.instance.SetGameOver();
+            return;
+        }
+
+        // Update ui
         GameManager.instance.UpdateStatText();
         
-        // set the player dead
+        // Set the player dead
         ChangePlayerState(PlayerState.DEATH);
         
-        // spawn explosion fx and destroy it afterwards
+        // Spawn explosion fx and destroy it afterwards
         GameObject explosionObject = Instantiate(explosionFXPrefab, transform.position, Quaternion.identity);
         Destroy(explosionObject, 1f);
 
-        // reduce player shot power to 1 if at higher power level
+        // Reduce player shot power to 1 if at higher power level
         if(playerStat.currPower > 1)
         {
             playerStat.currPower = 1;
@@ -520,11 +512,11 @@ public class PlayerController : MonoBehaviour
     // Collision
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // if alive and hit enemy
+        // If alive and hit enemy
         if(currPlayerState == PlayerState.NORMAL && 
             collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            // kill player
+            // Kill player
             PlayerDeath();
         }
 
@@ -532,7 +524,7 @@ public class PlayerController : MonoBehaviour
         if (currPlayerState == PlayerState.NORMAL && 
             collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
-            // kill player and disable enemy bullet
+            // Kill player and disable enemy bullet
             PlayerDeath();
             collision.gameObject.SetActive(false);
         }

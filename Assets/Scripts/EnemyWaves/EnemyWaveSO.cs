@@ -1,5 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+////
+// Description : Data for a type of enemy wave. 
+//                  Determines what type of enemy spawns for the wave, 
+//                  the powerup the last enemy drops and it's timing intervals.
+////
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WaveName", menuName = "ScriptableObject/EnemyWave", order = 1)]

@@ -1,3 +1,9 @@
+////
+// Description : Data storage for player stats. 
+//                  Keeps track of current level, power, lives, score and difficulty.
+//                  Also keeps track of previous in-progress game.
+////
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerStat", menuName = "ScriptableObject/PlayerStat", order = 1)]

@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+////
+// Description : Object pooling for the player shot(bullets). 
+//                  Creates sufficient instances of shots for player to use.
+////
+
 using UnityEngine;
 
 public class PlayerShotPool : MonoBehaviour
 {
+    // Static instance reference
     public static PlayerShotPool instance;
 
+    // Prefabs of the player shot types
     [Header("Shot prefabs")]
     public GameObject basicShotPrefab;
     public GameObject spreadShotPrefab;

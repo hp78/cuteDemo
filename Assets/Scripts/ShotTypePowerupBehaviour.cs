@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+////
+// Description : Behaviour for shot-type powerups in the game
+////
+
 using UnityEngine;
 
 public class ShotTypePowerupBehaviour : MonoBehaviour
 {
-    public int shotType = 0;
+    public PlayerController.ShotType shotType = PlayerController.ShotType.BASIC;
 
     // Update is called once per frame
     void Update()

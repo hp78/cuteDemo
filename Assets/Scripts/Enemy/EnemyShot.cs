@@ -1,11 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+////
+// Description : Behaviour for the enemy bullet
+////
+
+
 using UnityEngine;
 
 public class EnemyShot : MonoBehaviour
 {
+    // Direction vector of the bullet
     Vector3 directionVector = Vector3.left;
+
+    // Bullet speed
     public float bulletSpeed = 5;
+
+    // Bullet Damage
     public int bulletDamage = 1;
 
     // Sets the direction and rotation of the shot

@@ -1,5 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+////
+// Description : Behaviour for powerups in the game
+////
+
 using UnityEngine;
 
 public class PowerupBehaviour : MonoBehaviour

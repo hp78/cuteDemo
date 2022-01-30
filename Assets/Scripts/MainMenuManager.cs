@@ -1,5 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+////
+// Description : Handles the UI elements of the main menu and the function for its buttons.
+////
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -33,7 +35,7 @@ public class MainMenuManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Continue the game from a previous in-progress game
     /// </summary>
     public void ContinueGame()
     {
